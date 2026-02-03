@@ -9,11 +9,11 @@
  */
 const generateLoanId = (sequenceNumber, customerNumber, customerLoanNumber, loanType) => {
     const seq = String(sequenceNumber).padStart(3, '0');
-    const cusNum = String(customerNumber).padStart(3, '0');
+    const cusNum = String(customerNumber).padStart(2, '0');
     const loanNum = String(customerLoanNumber).padStart(2, '0');
     const type = loanType.toUpperCase();
 
-    return `00-${seq}-${cusNum}-${loanNum}-${type}`;
+    return `${seq}-${cusNum}-${loanNum}-${type}`;
 };
 
 /**

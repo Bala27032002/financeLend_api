@@ -133,12 +133,14 @@ const createLoan = async (req, res) => {
 
         // Generate loan ID as per image 2 format
         const lastLoan = await Loan.findOne().sort({ createdAt: -1 });
-        const sequenceNumber = lastLoan ? lastLoan.sequenceNumber + 1 : 100;
+        const sequenceNumber = lastLoan ? lastLoan.sequenceNumber + 1 : 1;
 
         const customerLoanNumber = customer.totalLoans + 1;
         const loanTypeCode = interestType === 'daily' ? 'D' : 'M';
 
-        const customerNumber = customer.customerId.split('-')[1];
+        const customerIdParts = customer.customerId.split('-');
+        const customerNumberRaw = customerIdParts[1] || '1';
+        const customerNumber = parseInt(customerNumberRaw, 10) || 1;
         const loanId = generateLoanId(sequenceNumber, customerNumber, customerLoanNumber, loanTypeCode);
 
         // Create loan
